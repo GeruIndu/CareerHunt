@@ -19,19 +19,19 @@ const userSchema = mongoose.Schema({
         required: true
     },
     role: {
-        type: string,
+        type: String,
         enum: ['student', 'recruiter'],
         required: true
     },
     profile: {
         bio: {
-            type: string
+            type: String
         },
         skills: [{
             type: String
         }],
-        resume: {type: String},
-        resumeOriginalName: {type: String},
+        resume: { type: String },
+        resumeOriginalName: { type: String },
         company: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Company'
@@ -41,6 +41,6 @@ const userSchema = mongoose.Schema({
             default: ''
         }
     },
-}, {timestamps: true});
+}, { timestamps: true });
 
 export const User = mongoose.model('user', userSchema);

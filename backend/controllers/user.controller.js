@@ -1,5 +1,5 @@
 import { User } from "../models/user.model.js";
-import bycrpt from "bcrypt";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 // Register Controller
@@ -23,7 +23,7 @@ export const register = async (req, res) => {
       });
     }
 
-    const hashPassword = await bycrpt.hash(password, 10);
+    const hashPassword = await bcrypt.hash(password, 10);
 
     await User.create({
       fullname,
@@ -63,7 +63,8 @@ export const login = async (req, res) => {
       });
     }
 
-    if (password !== (await bycrpt.compare(password, user.password))) {
+    const storedPassword = await bcrypt.compare(password, user.password);
+    if (!storedPassword) {
       return res.status(400).json({
         message: "Wrong Password",
         success: false,
@@ -97,7 +98,7 @@ export const login = async (req, res) => {
     return res
       .status(200)
       .cookie("token", token, {
-        maxAge: "1*24*60*60*1000",
+        maxAge: 1 * 24 * 60 * 60 * 1000,
         httpsOnly: true,
         sameSite: true,
       })
@@ -106,6 +107,7 @@ export const login = async (req, res) => {
         user,
         success: true,
       });
+
   } catch (error) {
     console.log(error);
   }
