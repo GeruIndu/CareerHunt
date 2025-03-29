@@ -7,7 +7,7 @@ const jobSchema = mongoose.Schema({
     },
     description: {
         type: String,
-        required: true 
+        required: true
     },
     requirements: [{
         type: string
@@ -18,17 +18,21 @@ const jobSchema = mongoose.Schema({
     },
     location: {
         type: string,
-        required: true 
+        required: true
     },
     jobtype: {
         type: String,
+        required: true
+    },
+    experience: {
+        type: Number,
         required: true
     },
     position: {
         type: Number,
         required: true
     },
-    company: {
+    companyId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Company',
         required: true
@@ -43,6 +47,6 @@ const jobSchema = mongoose.Schema({
         ref: 'Application',
         default: 0
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
 export const Job = mongoose.model('job', jobSchema);
