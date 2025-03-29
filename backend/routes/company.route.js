@@ -7,6 +7,6 @@ const router = express.Router();
 router.route('/register').post(isAuthenticated, companyRegister);
 router.route('/get').get(isAuthenticated, getCompanyByUser);
 router.route('/get/:id').get(isAuthenticated, getCompanyById);
-router.route('/update/:id').post(isAuthenticated, updateCompany);
+router.route('/update/:id').put(isAuthenticated, updateCompany);
 
 export default router;

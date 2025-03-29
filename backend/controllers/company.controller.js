@@ -10,7 +10,7 @@ export const companyRegister = async (req, res) => {
             })
         }
 
-        const company = await Company.findOne({ name: companyName });
+        let company = await Company.findOne({ name: companyName });
         if (company) {
             return res.status(400).json({
                 message: "This Campany already exist.",
@@ -78,7 +78,7 @@ export const getCompanyById = async (req, res) => {
 export const updateCompany = async (req, res) => {
     try {
         const { companyName, description, location, website } = req.body;
-        const updateData = { companyName, description, location, website };
+        const updateData = { name: companyName, description, location, website };
 
         const company = await Company.findByIdAndUpdate(req.params.id, updateData, { new: true });
 
@@ -91,6 +91,7 @@ export const updateCompany = async (req, res) => {
 
         return res.status(200).json({
             message: "Company information update successfully.",
+            company,
             success: true
         })
 
