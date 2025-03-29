@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const applicationSchema = mongoose.Schema({
     job: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Job',
+        ref: 'job',
         required: true
     },
     applicant: {
@@ -16,6 +16,6 @@ const applicationSchema = mongoose.Schema({
         enum: ['pending', 'selected', 'rejected'],
         default: 'pending'
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
 export const Application = mongoose.model('application', applicationSchema);
