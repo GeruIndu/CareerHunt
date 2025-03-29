@@ -22,7 +22,7 @@ export const applyJob = async (req, res) => {
             })
         }
 
-        const alreadyApplied = await application.findOne({ job: jobId, applicant: userId });
+        const alreadyApplied = await Application.findOne({ job: jobId, applicant: userId });
 
         if (alreadyApplied) {
             return res.status(401).json({
@@ -119,21 +119,21 @@ export const updateStatus = async (req, res) => {
             })
         }
 
-        let applicanation = await Application.findOne({ _id: applicationsId });
+        let application = await Application.findOne({ _id: applicationsId });
 
-        if (!applicanation) {
+        if (!application) {
             return res.status(400).json({
                 message: "Application is not found.",
                 status: false
             })
         }
 
-        applicanation.status = status.toLowerCase();
-        await applicanation.save();
+        application.status = status.toLowerCase();
+        await application.save();
 
         return res.status(200).json({
             message: "Status update successfully",
-            applicanation,
+            application,
             status: true
         })
 
