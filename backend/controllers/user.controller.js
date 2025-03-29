@@ -100,7 +100,7 @@ export const login = async (req, res) => {
       .cookie("token", token, {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         httpsOnly: true,
-        sameSite: true,
+        sameSite: 'strict',
       })
       .json({
         message: "User login successfully.",
@@ -126,21 +126,19 @@ export const updateProfile = async (req, res) => {
   try {
     const { fullname, contact, bio, skills } = req.body;
 
-    if (!fullname || !contact || !bio || !skills) {
-      return res.status(400).json({
-        message: "Something is missing.",
-        success: false,
-      });
-    }
-
-    const skillsArray = skills.split(",");
-    const user = await User.findOne({ _id: req.id });
+    let user = await User.findOne({ _id: req.id });
 
     // update
-    user.fullname = fullname;
-    user.contact = contact;
-    user.profile.bio = bio;
-    user.profile.skills = skillsArray;
+    if (fullname)
+      user.fullname = fullname;
+    if (contact)
+      user.contact = contact;
+    if (bio)
+      user.profile.bio = bio;
+    if (skills) {
+      const skillsArray = skills.split(",");
+      user.profile.skills = skillsArray;
+    }
 
     await user.save();
 

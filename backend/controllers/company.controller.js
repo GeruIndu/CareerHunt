@@ -1,0 +1,100 @@
+import { Company } from "../models/company.model.js";
+
+export const companyRegister = async (req, res) => {
+    try {
+        const { companyName } = req.body;
+        if (!companyName) {
+            return res.status(404).json({
+                message: "Something is missing.",
+                success: true
+            })
+        }
+
+        const company = await Company.findOne({ name: companyName });
+        if (company) {
+            return res.status(400).json({
+                message: "This Campany already exist.",
+                success: true
+            })
+        }
+
+        company = await Company.create({
+            name: companyName,
+            userId: req.id
+        });
+
+        return res.status(201).json({
+            message: "Company is registerd successfully",
+            company,
+            success: true
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getCompanyByUser = async (req, res) => {
+    try {
+        const companies = await Company.find({ userId: req.id });
+        if (!companies) {
+            return res.status(404).json({
+                message: "Companies Not found",
+                success: true
+            })
+        }
+
+        return res.status(404).json({
+            companies,
+            success: true
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getCompanyById = async (req, res) => {
+    try {
+        const comapanyId = req.params.id;
+
+        const company = await Company.findById(comapanyId);
+        if (!company) {
+            return res.status(404).json({
+                message: "Company not found",
+                status: false
+            })
+        }
+
+        return res.status(200).json({
+            company,
+            success: true
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updateCompany = async (req, res) => {
+    try {
+        const { companyName, description, location, website } = req.body;
+        const updateData = { companyName, description, location, website };
+
+        const company = await Company.findByIdAndUpdate(req.params.id, updateData, { new: true });
+
+        if (!company) {
+            return res.status(404).json({
+                message: "Company not found.",
+                success: true
+            })
+        }
+
+        return res.status(200).json({
+            message: "Company information update successfully.",
+            success: true
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
