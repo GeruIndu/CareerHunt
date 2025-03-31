@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../shared/navbar'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
@@ -7,17 +7,35 @@ import { Button } from '../ui/button'
 import { Link } from 'react-router-dom'
 
 const Login = () => {
+
+    const [input, setInput] = useState({
+        email: "",
+        password: "",
+        role: "",
+    })
+
+    const changeEventHandler = (e) => {
+        setInput({ ...input, [e.target.name]: e.target.value });
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        console.log(input);
+    }
+
     return (
         <div>
             <Navbar />
             <div className='flex items-center justify-center max-w-7xl mx-auto'>
-                <form action="" className='w-1/2 border border-gray-200 rounded-md p-4 my10'>
+                <form onSubmit={submitHandler} className='w-1/2 border border-gray-200 rounded-md p-4 my10'>
                     <div className='font-bold text-xl mb-5'>Login</div>
                     <div className='my-2'>
                         <Label>Email</Label>
                         <Input
                             type='email'
                             name='email'
+                            value={input.email}
+                            onChange={changeEventHandler}
                             placeholder='example@gmail.com'
                             className='my-2'
                         />
@@ -27,6 +45,8 @@ const Login = () => {
                         <Input
                             type='password'
                             name='password'
+                            value={input.password}
+                            onChange={changeEventHandler}
                             placeholder='12345678'
                             className='my-2'
                         />
@@ -40,6 +60,8 @@ const Login = () => {
                                     name='role'
                                     className='cursor-pointer'
                                     id='r1'
+                                    checked={input.role === 'student'}
+                                    onChange={changeEventHandler}
                                 />
                                 <Label className='cursor-pointer' htmlFor="r1">Student</Label>
                             </div>
@@ -50,13 +72,15 @@ const Login = () => {
                                     name='role'
                                     className='cursor-pointer'
                                     id='r2'
+                                    checked={input.role === 'recruiter'}
+                                    onChange={changeEventHandler}
                                 />
                                 <Label className='cursor-pointer' htmlFor="r2">Recruiter</Label>
                             </div>
                         </RadioGroup>
                     </div>
 
-                    <Button className='w-full cursor-pointer my-2'>Login</Button>
+                    <Button type='submit' className='w-full cursor-pointer my-2'>Login</Button>
                     <span>Don't have an account? <Link to='/signup' className='text-blue-800'>Signup</Link></span>
                 </form>
             </div>

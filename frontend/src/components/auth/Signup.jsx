@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../shared/navbar'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
@@ -7,17 +7,42 @@ import { Button } from '../ui/button'
 import { Link } from 'react-router-dom'
 
 const Signup = () => {
+
+    const [input, setInput] = useState({
+        fullname: "",
+        email: "",
+        password: "",
+        contact: "",
+        role: "",
+        file: null
+    })
+
+    const changeEventHandler = (e) => {
+        setInput({ ...input, [e.target.name]: e.target.value });
+    }
+
+    const changeFileHandler = (e) => {
+        setInput({ ...input, file: e.target.files?.[0] });
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        console.log(input);
+    }
+
     return (
         <div>
             <Navbar />
             <div className='flex items-center justify-center max-w-7xl mx-auto'>
-                <form action="" className='w-1/2 border border-gray-200 rounded-md p-4 my10'>
+                <form onSubmit={submitHandler} className='w-1/2 border border-gray-200 rounded-md p-4 my10'>
                     <div className='font-bold text-xl mb-5'>Sign up</div>
                     <div className='my-2'>
                         <Label>Full Name</Label>
                         <Input
                             type='text'
-                            name='name'
+                            name='fullname'
+                            value={input.fullname}
+                            onChange={changeEventHandler}
                             placeholder='Indrajit Mondal'
                             className='my-2'
                         />
@@ -27,6 +52,8 @@ const Signup = () => {
                         <Input
                             type='email'
                             name='email'
+                            value={input.email}
+                            onChange={changeEventHandler}
                             placeholder='example@gmail.com'
                             className='my-2'
                         />
@@ -36,6 +63,8 @@ const Signup = () => {
                         <Input
                             type='password'
                             name='password'
+                            value={input.password}
+                            onChange={changeEventHandler}
                             placeholder='12345678'
                             className='my-2'
                         />
@@ -45,6 +74,8 @@ const Signup = () => {
                         <Input
                             type='number'
                             name='contact'
+                            value={input.contact}
+                            onChange={changeEventHandler}
                             placeholder='99999 99999'
                             className='my-2'
                         />
@@ -55,7 +86,8 @@ const Signup = () => {
                             className='my-2'
                             type='file'
                             accept='image/*'
-                            name='profile'
+                            name='file'
+                            onChange={changeFileHandler}
                         />
                     </div>
                     <div className='flex items-center'>
@@ -67,6 +99,8 @@ const Signup = () => {
                                     name='role'
                                     className='cursor-pointer'
                                     id='r1'
+                                    checked={input.role === 'student'}
+                                    onChange={changeEventHandler}
                                 />
                                 <Label className='cursor-pointer' htmlFor="r1">Student</Label>
                             </div>
@@ -77,13 +111,15 @@ const Signup = () => {
                                     name='role'
                                     className='cursor-pointer'
                                     id='r2'
+                                    checked={input.role === 'recruiter'}
+                                    onChange={changeEventHandler}
                                 />
                                 <Label className='cursor-pointer' htmlFor="r2">Recruiter</Label>
                             </div>
                         </RadioGroup>
                     </div>
 
-                    <Button className='w-full cursor-pointer my-2'>Signup</Button>
+                    <Button submit="submit" className='w-full cursor-pointer my-2'>Signup</Button>
                     <span>Already have an account? <Link to='/login' className='text-blue-800'>Login</Link></span>
                 </form>
             </div>
@@ -91,4 +127,4 @@ const Signup = () => {
     )
 }
 
-export default Signup
+export default Signup;
