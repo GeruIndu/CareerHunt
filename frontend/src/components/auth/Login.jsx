@@ -4,10 +4,13 @@ import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import { RadioGroup } from '../ui/radio-group'
 import { Button } from '../ui/button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'sonner'
 import { USER_API_END_POINT } from '@/utils/constant'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoading } from '@/store/authSlice'
+import { Loader2 } from 'lucide-react'
 
 const Login = () => {
 
@@ -17,6 +20,10 @@ const Login = () => {
         role: "",
     })
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { loading } = useSelector(store => store.auth);
+
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     }
@@ -25,6 +32,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
+            dispatch(setLoading(true));
             const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
                 headers: {
                     "Content-Type": "application/json"
@@ -33,6 +41,7 @@ const Login = () => {
             });
 
             if (res.data.success) {
+                navigate('/');
                 toast.success(res.data.message);
             }
             else
@@ -41,6 +50,8 @@ const Login = () => {
         } catch (error) {
             console.log(error)
             toast.error(error.response.data.message);
+        } finally {
+            dispatch(setLoading(false));
         }
     }
 
@@ -101,7 +112,7 @@ const Login = () => {
                         </RadioGroup>
                     </div>
 
-                    <Button type='submit' className='w-full cursor-pointer my-2'>Login</Button>
+                    {loading ? <Button className='cursor-pointer w-full my-2'><Loader2 className='mr-2 h-5 w-5 animate-spin' />Please wait</Button> : <Button submit="submit" className='w-full cursor-pointer my-2'>Login</Button>}
                     <span>Don't have an account? <Link to='/signup' className='text-blue-800'>Signup</Link></span>
                 </form>
             </div>

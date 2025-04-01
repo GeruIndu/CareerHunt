@@ -8,6 +8,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant.js'
 import { toast } from 'sonner'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoading } from '@/store/authSlice'
+import { Loader2 } from 'lucide-react'
 
 const Signup = () => {
 
@@ -20,6 +23,8 @@ const Signup = () => {
         file: null
     })
 
+    const dispath = useDispatch();
+    const { loading } = useSelector(store => store.auth);
     const navigate = useNavigate();
 
     const changeEventHandler = (e) => {
@@ -43,6 +48,7 @@ const Signup = () => {
             formdata.append("file", input.file);
 
         try {
+            dispath(setLoading(true));
             const res = await axios.post(`${USER_API_END_POINT}/register`, formdata, {
                 headers: {
                     "Content-Type": "multipart/form-data"
@@ -58,6 +64,8 @@ const Signup = () => {
 
         } catch (error) {
             toast.error(error.response.data.message)
+        } finally {
+            dispath(setLoading(false));
         }
 
     }
@@ -151,7 +159,7 @@ const Signup = () => {
                         </RadioGroup>
                     </div>
 
-                    <Button submit="submit" className='w-full cursor-pointer my-2'>Signup</Button>
+                    {loading ? <Button className='cursor-pointer w-full my-2'><Loader2 className='mr-2 h-5 w-5 animate-spin' />Please wait</Button> : <Button submit="submit" className='w-full cursor-pointer my-2'>Signup</Button>}
                     <span>Already have an account? <Link to='/login' className='text-blue-800'>Login</Link></span>
                 </form>
             </div>
