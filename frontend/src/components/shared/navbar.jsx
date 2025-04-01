@@ -23,7 +23,7 @@ const Navbar = () => {
 
           {!user ? <div className='flex items-center gap-2'>
             <Link to='/login'><Button variant='outline' className='cursor-pointer'>Login</Button></Link>
-            <Link to='/signup'><Button className='bg-[#6A38C2] cursor-pointer hover:bg-[#57427c]'>Signup</Button></Link>
+            <Link to='/signup'><Button className='bg-[#0f0e61] cursor-pointer hover:bg-[#090849]'>Signup</Button></Link>
           </div> :
             <Popover>
               <PopoverTrigger asChild>
