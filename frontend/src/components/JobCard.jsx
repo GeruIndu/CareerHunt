@@ -3,8 +3,12 @@ import { Button } from './ui/button'
 import { Bookmark } from 'lucide-react'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Badge } from './ui/badge'
+import { Link } from 'react-router-dom'
 
 const JobCard = () => {
+
+    const jobId = 'msnbh3bkwebfdkakkn'
+
     return (
         <div className='p-5 rounded-md shadow-xl bg-white border border-grey-100'>
             <div className='flex items-center justify-between'>
@@ -32,7 +36,7 @@ const JobCard = () => {
                 <Badge variant='ghost' className='font-bold text-[#00aeff]'>13LPA</Badge>
             </div>
             <div className='flex items-center gap-2 my-4'>
-                <Button variant='outline'>Details</Button>
+                <Button variant='outline'><Link to={`/description/${jobId}`}>Details</Link></Button>
                 <Button className='bg-[#1d66b9]'>Save for later</Button>
             </div>
         </div>
