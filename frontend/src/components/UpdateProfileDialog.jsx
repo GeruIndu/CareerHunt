@@ -30,7 +30,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     }
     const fileChangeHandler = (e) => {
         const file = e.target.files?.[0];
-        setInput[{ ...input, file }]
+        setInput({ ...input, file });
     }
 
     const submitHandler = async (e) => {
@@ -43,8 +43,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         formData.append('bio', input.bio);
         formData.append('skills', input.skills);
 
-        if (file)
-            formData.append('resume', input.file);
+        if (input.file)
+            formData.append('file', input.file);
 
         try {
             setLoading(true);
@@ -55,7 +55,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 withCredentials: true
             });
             if (res.data.success) {
-                dispatch(setAuthUser(user));
+                dispatch(setAuthUser(res.data.user));
                 toast.success(res.data.message);
             }
             else
@@ -67,7 +67,6 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             setLoading(false);
             setOpen(false);
         }
-        console.log(input)
     }
 
     return (

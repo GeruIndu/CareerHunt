@@ -27,8 +27,8 @@ const Profile = () => {
                             <AvatarImage src='https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg' />
                         </Avatar>
                         <div>
-                            <h1 className='font-bold text-xl'>{user.fullname}</h1>
-                            <p className='text-sm text-gray-600'>{user.profile?.bio}</p>
+                            <h1 className='font-bold text-xl'>{user?.fullname}</h1>
+                            <p className='text-sm text-gray-600'>{user?.profile?.bio}</p>
                         </div>
                     </div>
                     <Button onClick={() => setOpen(true)} className='text-right' variant='outline'><Pen /></Button>
@@ -36,18 +36,18 @@ const Profile = () => {
                 <div className="my-5">
                     <div className='flex items-center gap-3 my-2'>
                         <Mail />
-                        <span>{user.email}</span>
+                        <span>{user?.email}</span>
                     </div>
                     <div className='flex items-center gap-3 my-2'>
                         <Contact />
-                        <span>{user.contact}</span>
+                        <span>{user?.contact}</span>
                     </div>
                 </div>
                 <div>
                     <h1 className='my-3 text-md font-bold'>Skills</h1>
                     <div className='flex items-center gap-1'>
                         {
-                            user.profile?.skills.length ? user.profile.skills.map((skill, index) => {
+                            user?.profile?.skills.length ? user?.profile?.skills.map((skill, index) => {
                                 return <Badge key={index}>{skill}</Badge>
                             }) : <span>NA</span>
                         }
@@ -56,7 +56,7 @@ const Profile = () => {
                 <div className='grid w-full max-w-sm items-center gap-1 mt-5'>
                     <Label className='text-md font-bold'>Resume</Label>
                     {
-                        isResume ? <a target='_blank' href="https://github.com/geruindu" className='w-full text-blue-500 hover:underline cursor-pointer'>indrajit.pdf</a> : <span>NA</span>
+                        isResume ? <a target='_blank' href={user?.profile?.resume} className='w-full text-blue-500 hover:underline cursor-pointer'>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
                     }
                 </div>
             </div>
