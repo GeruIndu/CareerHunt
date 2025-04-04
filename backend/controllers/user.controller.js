@@ -9,6 +9,10 @@ export const register = async (req, res) => {
   try {
     const { fullname, email, password, role, contact } = req.body;
 
+    const file = req.file;
+    const photoURL = getDataURI(file);
+    const cloudinaryResponse = await cloudinary.uploader.upload(photoURL.content);
+
     if (!fullname || !email || !password || !role || !contact) {
       return res.status(400).json({
         message: "Something is missing.",
@@ -33,6 +37,9 @@ export const register = async (req, res) => {
       password: hashPassword,
       contact,
       role,
+      profile: {
+        profilePhoto: cloudinaryResponse.secure_url,
+      }
     });
 
     return res.status(201).json({
