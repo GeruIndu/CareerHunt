@@ -1,18 +1,37 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { JOBS_API_END_POINT } from '@/utils/constant';
+import { APPLICATION_API_END_POINT, JOBS_API_END_POINT } from '@/utils/constant';
 import { setSingleJob } from '@/store/jobSlice';
+import { toast } from 'sonner';
 
 const JobDescription = () => {
-    const isApplied = false;
     const params = useParams();
     const jobId = params.id;
     const dispatch = useDispatch();
+    const { user } = useSelector(store => store.auth)
     const { singleJob } = useSelector(store => store.job);
+    const initialApplication = singleJob?.applications.some(application => application.applicant === user?._id)
+    const [isApplied, setIsApplied] = useState(initialApplication);
+
+    const applyHandler = async () => {
+        try {
+            const res = await axios.get(`${APPLICATION_API_END_POINT}/apply/${jobId}`, { withCredentials: true });
+            console.log(res)
+            if (res.data.success) {
+                setIsApplied(true);
+                const updatedSingleJob = { ...singleJob, applications: [...singleJob.applications, { applicant: user?._id }] }
+                dispatch(setSingleJob(updatedSingleJob));
+                toast.success(res.data.message);
+            };
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response.data.message);
+        }
+    }
 
     useEffect(() => {
         const fetchSingleJob = async () => {
@@ -20,6 +39,7 @@ const JobDescription = () => {
                 const res = await axios.get(`${JOBS_API_END_POINT}/getbyid/${jobId}`, { withCredentials: true });
                 if (res.data.success) {
                     dispatch(setSingleJob(res.data.job));
+                    setIsApplied(res.data.job.applications.some(application => application.applicant === user._id));
                 }
             } catch (error) {
                 console.log(error, "hello");
@@ -41,7 +61,7 @@ const JobDescription = () => {
                         <Badge variant='ghost' className='font-bold text-[#00aeff]'>{singleJob?.salary}LPA</Badge>
                     </div>
                 </div>
-                <Button disabled={isApplied} className={`rounded-lg ${isApplied ? 'cursor-not-allowed' : 'bg-[#0003a3] hover:bg-[#00014b] cursor-pointer'}`} > {isApplied ? 'Already applied' : 'Apply'} </Button>
+                <Button onClick={!isApplied && applyHandler} disabled={isApplied} className={`rounded-lg ${isApplied ? 'cursor-not-allowed' : 'bg-[#0003a3] hover:bg-[#00014b] cursor-pointer'}`} > {isApplied ? 'Already applied' : 'Apply'} </Button>
             </div>
 
             <h1 className='border-b-2 border-b-gray-300 font-medium py-4 mb-4'>Job Description</h1>

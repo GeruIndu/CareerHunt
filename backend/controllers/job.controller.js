@@ -58,7 +58,9 @@ export const jobAdminCreated = async (req, res) => {
 
 export const findJobById = async (req, res) => {
     try {
-        const job = await Job.findById(req.params.id);
+        const job = await Job.findById(req.params.id).populate({
+            path: 'applications'
+        });
 
         if (!job) {
             return res.status(400).json({

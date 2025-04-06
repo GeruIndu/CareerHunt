@@ -10,7 +10,7 @@ export const applyJob = async (req, res) => {
         if (!jobId) {
             return res.status(404).json({
                 message: "Job id is required.",
-                status: false
+                success: false
             })
         }
 
@@ -18,7 +18,7 @@ export const applyJob = async (req, res) => {
         if (!job) {
             return res.status(404).json({
                 message: "Job is not found.",
-                status: false
+                success: false
             })
         }
 
@@ -27,7 +27,7 @@ export const applyJob = async (req, res) => {
         if (alreadyApplied) {
             return res.status(401).json({
                 message: "Already applied.",
-                status: false
+                success: false
             })
         }
 
@@ -42,7 +42,7 @@ export const applyJob = async (req, res) => {
         return res.status(201).json({
             message: "Aplication submitted successfully.",
             application,
-            status: true
+            success: true
         })
 
     } catch (error) {
@@ -66,7 +66,7 @@ export const getApplicationByUser = async (req, res) => {
         if (!applications) {
             return res.status(400).json({
                 message: "No application.",
-                status: false
+                success: false
             })
         }
 
@@ -94,13 +94,13 @@ export const getApplicationsByAdmin = async (req, res) => {
         if (!job) {
             return res.status(400).json({
                 message: "Application empty.",
-                status: false
+                success: false
             })
         }
 
         return res.status(200).json({
             job,
-            status: true
+            success: true
         })
     } catch (error) {
         console.log(error);
@@ -115,7 +115,7 @@ export const updateStatus = async (req, res) => {
         if (!status) {
             return res.status(404).json({
                 message: "Status is required.",
-                status: false
+                success: false
             })
         }
 
@@ -124,7 +124,7 @@ export const updateStatus = async (req, res) => {
         if (!application) {
             return res.status(400).json({
                 message: "Application is not found.",
-                status: false
+                success: false
             })
         }
 
@@ -134,7 +134,7 @@ export const updateStatus = async (req, res) => {
         return res.status(200).json({
             message: "Status update successfully",
             application,
-            status: true
+            success: true
         })
 
     } catch (error) {
