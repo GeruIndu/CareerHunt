@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
@@ -6,8 +6,18 @@ import { DeleteIcon, Edit2, MoreHorizontal } from 'lucide-react'
 import { useSelector } from 'react-redux'
 
 const CompanyTable = () => {
+    const { companies, searchText } = useSelector(store => store.company);
+    const [filterCompany, setFilterCompany] = useState(companies);
 
-    const { companies } = useSelector(store => store.company);
+    useEffect(() => {
+        const filteredCompany = companies.length >= 0 && companies.filter((company) => {
+            if (!searchText) {
+                return true;
+            }
+            return company?.name?.toLowerCase()?.includes(searchText.toLowerCase());
+        })
+        setFilterCompany(filteredCompany);
+    }, [companies, searchText])
 
     return (
         <div className='mt-5'>
@@ -23,8 +33,8 @@ const CompanyTable = () => {
                 </TableHeader>
                 <TableBody>
                     {
-                        companies?.length <= 0 ? <span>You haven't registered any company..</span> : (
-                            companies?.map((company) => (
+                        filterCompany?.length <= 0 ? <span className='flex mt-5 text-xl font-bold'>Not Found</span> : (
+                            filterCompany?.map((company) => (
                                 <TableRow key={company._id}>
                                     <TableCell>
                                         <Avatar className='h-10 w-10'>
