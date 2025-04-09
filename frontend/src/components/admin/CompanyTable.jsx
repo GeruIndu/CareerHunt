@@ -4,10 +4,12 @@ import { Avatar, AvatarImage } from '../ui/avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { DeleteIcon, Edit2, MoreHorizontal } from 'lucide-react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const CompanyTable = () => {
     const { companies, searchText } = useSelector(store => store.company);
     const [filterCompany, setFilterCompany] = useState(companies);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const filteredCompany = companies.length >= 0 && companies.filter((company) => {
@@ -47,7 +49,7 @@ const CompanyTable = () => {
                                         <Popover >
                                             <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
                                             <PopoverContent className='w-32 '>
-                                                <div className='flex items-center gap-3 mb-3 cursor-pointer'>
+                                                <div onClick={() => navigate(`/admin/companies/${company._id}`)} className='flex items-center gap-3 mb-3 cursor-pointer'>
                                                     <Edit2 className='w-4' />
                                                     <span>Edit</span>
                                                 </div>

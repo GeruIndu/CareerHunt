@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSingleCompany } from '@/store/companySlice'
+import useGetCompanyById from '../hooks/useGetCompanyById'
 
 const CompanySetup = () => {
     const params = useParams();
@@ -18,6 +19,8 @@ const CompanySetup = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { singleCompany } = useSelector(store => store.company);
+
+    useGetCompanyById(id);
 
     const [input, setInput] = useState({
         companyName: "",
@@ -78,7 +81,7 @@ const CompanySetup = () => {
             website: singleCompany.website || "",
             file: singleCompany.file || null
         })
-    }, [id, dispatch])
+    }, [singleCompany])
 
     return (
         <div>
@@ -155,4 +158,4 @@ const CompanySetup = () => {
     )
 }
 
-export default CompanySetup
+export default CompanySetup;

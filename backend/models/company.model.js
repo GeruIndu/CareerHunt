@@ -8,7 +8,7 @@ const companySchema = mongoose.Schema({
     description: {
         type: String
     },
-    wesite: {
+    website: {
         type: String
     },
     location: {
