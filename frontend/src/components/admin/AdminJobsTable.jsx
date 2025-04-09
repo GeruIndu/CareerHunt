@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { DeleteIcon, Edit2, MoreHorizontal } from 'lucide-react';
+import { DeleteIcon, Edit2, Eye, MoreHorizontal } from 'lucide-react';
 
 const AdminJobsTable = () => {
     const { allAdminJobs, searchJobByText } = useSelector(store => store.job);
@@ -47,6 +47,10 @@ const AdminJobsTable = () => {
                                                 <div onClick={() => navigate(`/admin/jobs/${job._id}`)} className='flex items-center gap-3 mb-3 cursor-pointer'>
                                                     <Edit2 className='w-4' />
                                                     <span>Edit</span>
+                                                </div>
+                                                <div onClick={() => navigate(`/admin/${job._id}/applicants`)} className='flex items-center gap-3 mb-3 cursor-pointer'>
+                                                    <Eye className='w-4' />
+                                                    <span>Applicants</span>
                                                 </div>
                                                 <div className='flex items-center gap-3 cursor-pointer'>
                                                     <DeleteIcon className='w-4' />
