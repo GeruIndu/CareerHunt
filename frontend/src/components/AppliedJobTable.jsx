@@ -24,7 +24,7 @@ const AppliedJobTable = () => {
                                     <TableCell>{application?.createdAt.split('T')[0]}</TableCell>
                                     <TableCell>{application?.job?.title}</TableCell>
                                     <TableCell>{application?.job?.companyId?.name}</TableCell>
-                                    <TableCell className='text-right'><Badge className={`text-md py-2 px-3 ${application.status === 'selected' && 'bg-green-800'} ${application.status === 'rejected' && 'bg-red-800'}`}>{application.status}</Badge></TableCell>
+                                    <TableCell className='text-right'><Badge className={`text-md py-2 px-3 ${application.status === 'selected' && 'bg-green-800'} ${application.status === 'rejected' && 'bg-red-800'} ${application.status === 'pending' && 'bg-gray-400'}`}>{application.status.toUpperCase()}</Badge></TableCell>
                                 </TableRow>
                             ))
                         )}
