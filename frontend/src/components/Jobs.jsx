@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import FilterSection from './FilterSection'
 import JobCard from './JobCard';
 import Navbar from './shared/navbar';
@@ -6,7 +6,21 @@ import { useSelector } from 'react-redux';
 
 const Jobs = () => {
 
-    const { allJobs } = useSelector(store => store.job);
+    const { allJobs, searchedQuery } = useSelector(store => store.job);
+    const [filteredJobs, setFilteredJobs] = useState(allJobs);
+
+    useEffect(() => {
+        if (searchedQuery) {
+            const filterJobs = allJobs.filter((job) => {
+                return job.title.toLowerCase().includes(searchedQuery.toLowerCase()) ||
+                    job.location.toLowerCase().includes(searchedQuery.toLowerCase()) ||
+                    job.description.toLowerCase().includes(searchedQuery.toLowerCase());
+            })
+            setFilteredJobs(filterJobs);
+        } else {
+            setFilteredJobs(allJobs);
+        }
+    }, [allJobs, searchedQuery]);
 
     return (
         <div>
@@ -17,11 +31,11 @@ const Jobs = () => {
                         <FilterSection />
                     </div>
                     {
-                        allJobs.length <= 0 ? <span>Job not found</span> : (
+                        filteredJobs.length <= 0 ? <span>Job not found</span> : (
                             <div className='flex-1 h-[88vh] overflow-y-auto pb-5'>
                                 <div className='grid grid-cols-3 gap-4'>
                                     {
-                                        allJobs.map((job) => (
+                                        filteredJobs.map((job) => (
                                             <div key={job._id}>
                                                 <JobCard job={job} />
                                             </div>
