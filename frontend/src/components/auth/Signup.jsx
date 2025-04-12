@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../shared/navbar'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
@@ -24,7 +24,7 @@ const Signup = () => {
     })
 
     const dispath = useDispatch();
-    const { loading } = useSelector(store => store.auth);
+    const { loading, user } = useSelector(store => store.auth);
     const navigate = useNavigate();
 
     const changeEventHandler = (e) => {
@@ -69,6 +69,10 @@ const Signup = () => {
         }
 
     }
+    useEffect(() => {
+        if (user)
+            navigate('/');
+    }, [])
 
     return (
         <div>

@@ -13,11 +13,13 @@ import CompanySetup from './components/admin/CompanySetup'
 import AdminJobs from './components/admin/AdminJobs'
 import AdminCreateJob from './components/admin/AdminCreateJob'
 import Applicants from './components/admin/Applicants'
+import ProtectedRoutes from './components/admin/ProtectedRoutes'
+import ProtectedUserRoutes from './components/ProtectedUserRoutes'
 
 const appRoute = createBrowserRouter([
   {
     path: '/',
-    element: <Home />
+    element: <ProtectedUserRoutes><Home /></ProtectedUserRoutes>
   },
   {
     path: '/login',
@@ -29,46 +31,46 @@ const appRoute = createBrowserRouter([
   },
   {
     path: '/jobs',
-    element: <Jobs />
+    element: <ProtectedUserRoutes><Jobs /></ProtectedUserRoutes>
   },
   {
     path: '/description/:id',
-    element: <JobDescription />
+    element: <ProtectedUserRoutes><JobDescription /></ProtectedUserRoutes>
   },
   {
     path: '/browse',
-    element: <Browse />
+    element: <ProtectedUserRoutes><Browse /></ProtectedUserRoutes>
   },
   {
     path: '/profile',
-    element: <Profile />
+    element: <ProtectedUserRoutes><Profile /></ProtectedUserRoutes>
   },
 
   // From here, all routes are related to admin
   {
     path: '/admin/companies',
-    element: <Companies />
+    element: <ProtectedRoutes><Companies /></ProtectedRoutes>
   },
   {
     path: '/admin/companies/create',
-    element: <CreateCompany />
+    element: <ProtectedRoutes><CreateCompany /></ProtectedRoutes>
   },
   {
     path: '/admin/companies/:id',
-    element: <CompanySetup />
+    element: <ProtectedRoutes><CompanySetup /></ProtectedRoutes>
   },
   // this are related to job in admin section
   {
     path: '/admin/jobs',
-    element: <AdminJobs />
+    element: <ProtectedRoutes><AdminJobs /></ProtectedRoutes>
   },
   {
     path: '/admin/jobs/create',
-    element: <AdminCreateJob />
+    element: <ProtectedRoutes><AdminCreateJob /></ProtectedRoutes>
   },
   {
     path: '/admin/:id/applicants',
-    element: <Applicants />
+    element: <ProtectedRoutes><Applicants /></ProtectedRoutes>
   },
 
 ])
