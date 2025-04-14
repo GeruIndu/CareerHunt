@@ -7,7 +7,7 @@ const ProtectedUserRoutes = ({ children }) => {
     const { user } = useSelector(store => store.auth)
 
     useEffect(() => {
-        if (!user || user.role !== 'student')
+        if (user && user.role !== 'student')
             navigate('/admin/companies');
     }, []);
 

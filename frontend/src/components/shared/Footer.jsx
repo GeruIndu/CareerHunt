@@ -17,8 +17,6 @@ const Footer = () => {
                 <div className="footer-links mb-6 md:mb-0">
                     <ul className="space-y-4 md:space-y-0 md:flex md:gap-8">
                         <li><a href="/about" className="hover:underline">About Us</a></li>
-                        <li><a href="/jobs" className="hover:underline">Browse Jobs</a></li>
-                        <li><a href="/post-job" className="hover:underline">Post a Job</a></li>
                         <li><a href="/contact" className="hover:underline">Contact Us</a></li>
                         <li><a href="/privacy-policy" className="hover:underline">Privacy Policy</a></li>
                         <li><a href="/terms" className="hover:underline">Terms & Conditions</a></li>
@@ -56,7 +54,7 @@ const Footer = () => {
 
             {/* Copyright Section */}
             <div className="text-center mt-8">
-                <p className="text-sm">&copy; 2025 JobPortal. All Rights Reserved.</p>
+                <p className="text-sm">&copy; 2025 CareerHunt. All Rights Reserved.</p>
             </div>
         </footer>
     );
