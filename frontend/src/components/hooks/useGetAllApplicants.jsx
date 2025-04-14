@@ -15,6 +15,7 @@ const useGetAllApplicants = (jobId) => {
                 }
             } catch (error) {
                 console.log(error);
+                toast.error('Internal Server Error!');
             }
         }
         fetchApplicants();

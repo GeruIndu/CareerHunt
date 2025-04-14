@@ -6,10 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const useGetAllJobs = () => {
     const dispatch = useDispatch();
-    const { searchedQuery } = useSelector(store => {
-        console.log(store.job);
-        return store.job;
-    });
+    const { searchedQuery } = useSelector(store => store.job);
 
     useEffect(() => {
         const fetchAllJobs = async () => {
@@ -20,6 +17,7 @@ const useGetAllJobs = () => {
                 }
             } catch (error) {
                 console.log(error);
+                toast.error('Internal Server Error!');
             }
         }
         fetchAllJobs();

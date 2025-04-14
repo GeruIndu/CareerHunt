@@ -15,6 +15,7 @@ const useGetAllCompanies = () => {
                 }
             } catch (error) {
                 console.log(error);
+                toast.error('Internal Server Error!');
             }
         }
         fetchCompanies();

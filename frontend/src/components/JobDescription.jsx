@@ -21,7 +21,6 @@ const JobDescription = () => {
     const applyHandler = async () => {
         try {
             const res = await axios.get(`${APPLICATION_API_END_POINT}/apply/${jobId}`, { withCredentials: true });
-            console.log(res)
             if (res.data.success) {
                 setIsApplied(true);
                 const updatedSingleJob = { ...singleJob, applications: [...singleJob.applications, { applicant: user?._id }] }
@@ -43,7 +42,7 @@ const JobDescription = () => {
                     setIsApplied(res.data.job.applications.some(application => application.applicant === user._id));
                 }
             } catch (error) {
-                console.log(error, "hello");
+                console.log(error);
                 toast.error(error.response.data.message);
             }
         }

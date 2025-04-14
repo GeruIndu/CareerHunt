@@ -15,6 +15,7 @@ const useGetCompanyById = (companyId) => {
                 }
             } catch (error) {
                 console.log(error);
+                toast.error('Internal Server Error!');
             }
         }
         fetchSinleCompany();

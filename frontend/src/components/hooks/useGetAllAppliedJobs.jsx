@@ -11,12 +11,12 @@ const useGetAllAppliedJobs = (id) => {
         const fetchAllAppliedJobs = async () => {
             try {
                 const res = await axios.get(`${APPLICATION_API_END_POINT}/get`, { withCredentials: true });
-                console.log(res.data);
                 if (res.data.success) {
                     dispatch(setAppliedJob(res.data.applications))
                 }
             } catch (error) {
                 console.log(error);
+                toast.error('Internal Server Error!');
             }
         }
         fetchAllAppliedJobs();
