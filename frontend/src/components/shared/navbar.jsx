@@ -2,7 +2,7 @@ import React from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button';
-import { LogOut, User2 } from 'lucide-react';
+import { Heart, LogOut, User2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
@@ -25,7 +25,7 @@ const Navbar = () => {
 
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   }
 
@@ -35,7 +35,7 @@ const Navbar = () => {
         <div>
           <Link to='/'><h1 className='text-2xl font-bold'>Career<span className='text-[#0244f8]'>Hunt</span></h1></Link>
         </div>
-        <div className='flex gap-12'>
+        <div className='flex gap-15'>
           <ul className='flex font-medium items-center gap-5 cursor-pointer'>
             {
               user?.role === 'recruiter' ?
@@ -49,6 +49,7 @@ const Navbar = () => {
                     <li><Link to='/'>Home</Link></li>
                     <li><Link to='/jobs'>Jobs</Link></li>
                     <li><Link to='/browse'>Browse</Link></li>
+                    <li><Link to='/wishlist'><Heart /></Link></li>
                   </>
                 )
             }

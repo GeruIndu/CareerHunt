@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from './ui/button'
-import { Bookmark } from 'lucide-react'
+import { Bookmark, Loader2 } from 'lucide-react'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Badge } from './ui/badge'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { JOBS_API_END_POINT } from '@/utils/constant'
+import { toast } from 'sonner'
 
 const JobCard = ({ job }) => {
+    const { wishlist } = useSelector(store => store.auth);
+    const [loading, setLoading] = useState(false);
+    const initialState = wishlist?.some(item => item._id === job._id);
+    const [isAddedToWishlist, setIsAddedToWishlist] = useState(initialState);
 
     const getDate = (mongodbTime) => {
         const createdDate = new Date(mongodbTime);
@@ -14,6 +22,21 @@ const JobCard = ({ job }) => {
         const timeDifference = currentDate - createdDate;
 
         return Math.floor(timeDifference / (24 * 60 * 60 * 1000));
+    }
+
+    const clickEventHandler = async (id) => {
+        try {
+            setLoading(true);
+            const res = await axios.get(`${JOBS_API_END_POINT}/addtowishlist/${id}`, { withCredentials: true });
+            if (res.data.success) {
+                toast.success(res.data.message);
+            }
+            setIsAddedToWishlist(job);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -44,7 +67,9 @@ const JobCard = ({ job }) => {
             </div>
             <div className='flex items-center gap-2 my-4'>
                 <Button variant='outline'><Link to={`/description/${job._id}`}>Details</Link></Button>
-                <Button className='bg-[#1d66b9]'>Save for later</Button>
+                {
+                    loading ? <Button className='bg-[#1d66b9]'><Loader2 className='h-5 w-5 animate-spin' />Please Wait</Button> : isAddedToWishlist ? <Button className='bg-[#b91d1d]' onClick={() => clickEventHandler(job._id)}>Remove from wishlist</Button> : <Button className='bg-[#1d66b9]' onClick={() => clickEventHandler(job._id)}>Save for later</Button>
+                }
             </div>
         </div>
     )

@@ -1,4 +1,5 @@
 import { Job } from "../models/job.model.js";
+import { User } from "../models/user.model.js";
 
 export const postJob = async (req, res) => {
     try {
@@ -105,6 +106,66 @@ export const getAllJobs = async (req, res) => {
             jobs,
             success: true
         })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getJobFromWishList = async (req, res) => {
+    try {
+        const userId = req.id;
+
+        const user = await User.findOne({ _id: userId }).populate({
+            path: 'wishlist',
+            populate: {
+                path: 'companyId',
+            }
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found.",
+                success: false
+            })
+        }
+
+        return res.status(200).json({
+            user,
+            success: true
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const addToWishlist = async (req, res) => {
+    try {
+        const userId = req.id;
+        const params = req.params;
+        const user = await User.findOne({ _id: userId });
+
+        user.wishlist.push(params.id);
+        await user.save();
+
+        return res.status(200).json({
+            message: "Added to Wishlist",
+            success: true
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const removeFromWishlist = async (req, res) => {
+    try {
+        const userId = req.id;
+        const params = req.params;
+        const user = await User.findOne({ _id: userId });
+
+
 
     } catch (error) {
         console.log(error);

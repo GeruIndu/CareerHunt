@@ -39,8 +39,14 @@ const userSchema = mongoose.Schema({
         profilePhoto: {
             type: String,
             default: '../Public/profile.jpeg'
-        }
+        },
     },
+    wishlist: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'job'
+        }
+    ],
 }, { timestamps: true });
 
 export const User = mongoose.model('user', userSchema);

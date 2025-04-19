@@ -3,6 +3,7 @@ import { APPLICATION_API_END_POINT } from '@/utils/constant';
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
 
 const useGetAllApplicants = (jobId) => {
     const dispatch = useDispatch();
@@ -15,11 +16,10 @@ const useGetAllApplicants = (jobId) => {
                 }
             } catch (error) {
                 console.log(error);
-                toast.error('Internal Server Error!');
             }
         }
         fetchApplicants();
     }, [dispatch, jobId])
 }
 
-export default useGetAllApplicants
+export default useGetAllApplicants;

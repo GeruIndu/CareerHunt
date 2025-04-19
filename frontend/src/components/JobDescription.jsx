@@ -42,7 +42,6 @@ const JobDescription = () => {
                     setIsApplied(res.data.job.applications.some(application => application.applicant === user._id));
                 }
             } catch (error) {
-                console.log(error);
                 toast.error(error.response.data.message);
             }
         }

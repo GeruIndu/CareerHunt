@@ -15,6 +15,8 @@ import AdminCreateJob from './components/admin/AdminCreateJob'
 import Applicants from './components/admin/Applicants'
 import ProtectedRoutes from './components/admin/ProtectedRoutes'
 import ProtectedUserRoutes from './components/ProtectedUserRoutes'
+import ProtectedUnauthorizedUser from './components/ProtectedUnauthorizedUser'
+import WishList from './components/WishList'
 
 const appRoute = createBrowserRouter([
   {
@@ -31,19 +33,24 @@ const appRoute = createBrowserRouter([
   },
   {
     path: '/jobs',
-    element: <ProtectedUserRoutes><Jobs /></ProtectedUserRoutes>
+    element: <ProtectedUnauthorizedUser><ProtectedUserRoutes><Jobs /></ProtectedUserRoutes></ProtectedUnauthorizedUser>
   },
   {
     path: '/description/:id',
-    element: <ProtectedUserRoutes><JobDescription /></ProtectedUserRoutes>
+    element: <ProtectedUnauthorizedUser><ProtectedUserRoutes><JobDescription /></ProtectedUserRoutes></ProtectedUnauthorizedUser>
   },
   {
     path: '/browse',
-    element: <ProtectedUserRoutes><Browse /></ProtectedUserRoutes>
+    element: <ProtectedUnauthorizedUser><ProtectedUserRoutes><Browse /></ProtectedUserRoutes></ProtectedUnauthorizedUser>
   },
   {
+    path: '/wishlist',
+    element: <ProtectedUnauthorizedUser><ProtectedUserRoutes><WishList /></ProtectedUserRoutes></ProtectedUnauthorizedUser>
+  }
+  ,
+  {
     path: '/profile',
-    element: <ProtectedUserRoutes><Profile /></ProtectedUserRoutes>
+    element: <ProtectedUnauthorizedUser><ProtectedUserRoutes><Profile /></ProtectedUserRoutes></ProtectedUnauthorizedUser>
   },
 
   // From here, all routes are related to admin
