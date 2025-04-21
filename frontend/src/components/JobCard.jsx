@@ -24,14 +24,31 @@ const JobCard = ({ job }) => {
         return Math.floor(timeDifference / (24 * 60 * 60 * 1000));
     }
 
-    const clickEventHandler = async (id) => {
+    const clickAddEventHandler = async (id) => {
         try {
             setLoading(true);
             const res = await axios.get(`${JOBS_API_END_POINT}/addtowishlist/${id}`, { withCredentials: true });
+            console.log(res)
             if (res.data.success) {
                 toast.success(res.data.message);
             }
-            setIsAddedToWishlist(job);
+            setIsAddedToWishlist(true);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const clickRemoveEventHandler = async (id) => {
+        try {
+            setLoading(true);
+            const res = await axios.get(`${JOBS_API_END_POINT}/removewishlist/${id}`, { withCredentials: true });
+
+            if (res.data.success) {
+                toast.success(res.data.message);
+            }
+            setIsAddedToWishlist(false);
         } catch (error) {
             console.log(error);
         } finally {
@@ -68,7 +85,7 @@ const JobCard = ({ job }) => {
             <div className='flex items-center gap-2 my-4'>
                 <Button variant='outline'><Link to={`/description/${job._id}`}>Details</Link></Button>
                 {
-                    loading ? <Button className='bg-[#1d66b9]'><Loader2 className='h-5 w-5 animate-spin' />Please Wait</Button> : isAddedToWishlist ? <Button className='bg-[#b91d1d]' onClick={() => clickEventHandler(job._id)}>Remove from wishlist</Button> : <Button className='bg-[#1d66b9]' onClick={() => clickEventHandler(job._id)}>Save for later</Button>
+                    loading ? <Button className='bg-[#1d66b9]'><Loader2 className='h-5 w-5 animate-spin' />Please Wait</Button> : isAddedToWishlist ? <Button className='bg-[#b91d1d]' onClick={() => clickRemoveEventHandler(job._id)}>Remove from wishlist</Button> : <Button className='bg-[#1d66b9]' onClick={() => clickAddEventHandler(job._id)}>Save for later</Button>
                 }
             </div>
         </div>

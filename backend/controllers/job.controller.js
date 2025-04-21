@@ -151,6 +151,7 @@ export const addToWishlist = async (req, res) => {
 
         return res.status(200).json({
             message: "Added to Wishlist",
+            user,
             success: true
         })
 
@@ -163,10 +164,15 @@ export const removeFromWishlist = async (req, res) => {
     try {
         const userId = req.id;
         const params = req.params;
-        const user = await User.findOne({ _id: userId });
+        await User.updateOne(
+            { _id: userId },
+            { $pull: { wishlist: params.id } }
+        );
 
-
-
+        return res.status(200).json({
+            message: "Job removed successfully",
+            success: true
+        });
     } catch (error) {
         console.log(error);
     }
