@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { Bookmark, Loader2 } from 'lucide-react'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
@@ -9,11 +9,15 @@ import axios from 'axios'
 import { JOBS_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job, onRemove }) => {
     const { wishlist } = useSelector(store => store.auth);
     const [loading, setLoading] = useState(false);
-    const initialState = wishlist?.some(item => item._id === job._id);
-    const [isAddedToWishlist, setIsAddedToWishlist] = useState(initialState);
+    const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
+
+    useEffect(() => {
+        setIsAddedToWishlist(wishlist?.some(item => item._id === job._id));
+    }, [wishlist, job._id]);
+
 
     const getDate = (mongodbTime) => {
         const createdDate = new Date(mongodbTime);
@@ -47,8 +51,11 @@ const JobCard = ({ job }) => {
 
             if (res.data.success) {
                 toast.success(res.data.message);
+                setIsAddedToWishlist(false);
+                if (onRemove) {
+                    onRemove();
+                }
             }
-            setIsAddedToWishlist(false);
         } catch (error) {
             console.log(error);
         } finally {

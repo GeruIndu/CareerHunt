@@ -4,8 +4,10 @@ import JobCard from './JobCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSearchedQuery } from '@/store/jobSlice'
 import useGetAllJobs from './hooks/useGetAllJobs'
+import useGetAllWishlist from './hooks/useGetAllWishlist'
 
 const Browse = () => {
+    useGetAllWishlist();
     useGetAllJobs();
     const { allJobs } = useSelector(store => store.job);
     const dispatch = useDispatch();

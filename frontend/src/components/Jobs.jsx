@@ -3,9 +3,10 @@ import FilterSection from './FilterSection'
 import JobCard from './JobCard';
 import Navbar from './shared/navbar';
 import { useSelector } from 'react-redux';
+import useGetAllWishlist from './hooks/useGetAllWishlist';
 
 const Jobs = () => {
-
+    useGetAllWishlist()
     const { allJobs, searchedQuery } = useSelector(store => store.job);
     const [filteredJobs, setFilteredJobs] = useState(allJobs);
 
