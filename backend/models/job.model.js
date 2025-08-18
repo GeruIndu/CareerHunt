@@ -16,6 +16,11 @@ const jobSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    monthly: {
+        type: Number,
+        required: true
+    }
+    ,
     location: {
         type: String,
         required: true

@@ -32,7 +32,6 @@ const JobCard = ({ job, onRemove }) => {
         try {
             setLoading(true);
             const res = await axios.get(`${JOBS_API_END_POINT}/addtowishlist/${id}`, { withCredentials: true });
-            console.log(res)
             if (res.data.success) {
                 toast.success(res.data.message);
             }

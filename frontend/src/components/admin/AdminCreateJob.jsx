@@ -24,6 +24,7 @@ const AdminCreateJob = () => {
         requirements: "",
         position: 0,
         salary: 0,
+        monthly: 0,
         location: "",
         jobtype: "",
         experience: 0,
@@ -133,6 +134,17 @@ const AdminCreateJob = () => {
                                 className='focus-visible:ring-offset-0 focus-visible:ring-0 my-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                                 placeholder='Enter Salary in LPA'
                                 value={input.salary}
+                                onChange={changeEventHandler}
+                            />
+                        </div>
+                        <div >
+                            <Label>Monthly Salary</Label>
+                            <Input
+                                type='number'
+                                name='monthly'
+                                className='focus-visible:ring-offset-0 focus-visible:ring-0 my-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
+                                placeholder='Enter monthly Salary'
+                                value={input.monthly}
                                 onChange={changeEventHandler}
                             />
                         </div>
