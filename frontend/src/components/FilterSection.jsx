@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Checkbox from './ui/Checkbox';  // Import the Checkbox component
+import Checkbox from './ui/checkbox.jsx';  // Import the Checkbox component
 import { useDispatch } from 'react-redux';
 import { setSearchedQuery } from '@/store/jobSlice';
 
